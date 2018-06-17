@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="index_css.css">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="vue.min.js"></script>
+</head>
+<body>
+	<div class="container" id="nowmusic">
+		<div class="container_pic" v-bind:style="{backgroundImage:'url('+song_list[num].pic+')'}"></div>
+		<div class="small_container">
+			<div class="volume" v-show="functional_keys.volume_bool">
+				<div class="now_volume" v-bind:style="{width:volume.width+'%'}"></div>
+				<div class="volume_block" onmousedown="volume_down()" v-bind:style="{left:volume.width+'%'}"></div>
+			</div>
+			<div class="functional_group">
+				<div class="functional_keys" v-bind:style="{height:functional_keys.functional_height+'px'}" v-on:click="functional_son">
+					<div class="gan gan1" v-bind:class="{gan1_change:functional_keys.functional_bool}"></div>
+					<div class="gan gan2" v-bind:class="{gan2_change:functional_keys.functional_bool}"></div>
+					<div class="gan gan3" v-bind:class="{gan3_change:functional_keys.functional_bool}"></div>
+				</div>
+				<div class="functional_volume" v-bind:class="{functional_volume_deafult:functional_keys.functional_bool}" v-bind:style="{height:functional_keys.functional_height*1.2+'px'}" v-on:click="volume_bool" title="调一下音量还是可以的">
+					<i class="fa fa-volume-up"></i>
+				</div>
+				<div class="functional_heart" v-bind:class="{functional_heart_deafult:functional_keys.functional_bool}" v-bind:style="{height:functional_keys.functional_height*1.2+'px'}" title="收藏是不可能收藏的">
+					<i class="fa fa-heart"></i>
+				</div>
+				
+				<div class="functional_down" v-bind:class="{functional_down_deafult:functional_keys.functional_bool}" v-bind:style="{height:functional_keys.functional_height*1.2+'px'}" title="下载是不可能下载的"> 
+					<i class="fa fa-arrow-down"></i>
+				</div>
+				<div class="functional_weixin" v-bind:class="{functional_weixin_deafult:functional_keys.functional_bool}" v-bind:style="{height:functional_keys.functional_height*1.2+'px'}" title="分享也是不可能的"> 
+					<i class="fa fa-weixin"></i>
+				</div>
+			</div>
+			<div class="music_information" >
+				<div class="logo" v-bind:style="{height:logo_height+'px',backgroundImage:'url('+song_list[num].pic+')'}">
+					<div class="logo_left">
+						<div class="left_cir" v-bind:style="{transform:'rotate('+volume.rotate_left+'deg)'}"></div>
+					</div>
+					<div class="logo_right">
+						<div class="right_cir" v-bind:style="{transform:'rotate('+volume.rotate_right+'deg)'}"></div>
+					</div>
+				</div>
+				<div class="title">{{song_list[num].title}}</div>
+				<div class="album"><span class="word_front">Album-</span>{{song_list[num].album}}</div>
+				<div class="singer"><span class="word_front">Artist-</span>{{song_list[num].singer}}</div>
+			</div>
+			<div class="music_statue">
+				<div class="up_status">
+					<span class="now_time">{{now_min}}:{{now_second}}</span>
+					<div class="time_out">
+						<div class="time_in" v-bind:style="{width:time_width+'%'}"></div>
+					</div>
+					<span class="total_time">{{song_list[num].time}}</span>
+				</div>
+				<div class="bottom_statue">
+					<div  v-bind:class="{ select_change: rand_num }" class="random" v-on:click='rand_change' title="随机播放"><i class="fa fa-random"></i></div>
+					<div class="last_song" v-on:click='last_song' title="上一首"><i class="fa fa-backward"></i></div>
+					<div class="pause" v-on:click="play_music" v-bind:style="{height:pause_height+'px'}">
+						  <i class="fa fa-play" v-show="!isPlaying"></i>
+						  <i class="fa fa-pause" v-show="isPlaying"></i>
+					</div>
+					<div class="next_song" v-on:click='next_song' title="下一首"><i class="fa fa-forward"></i></div>
+					<div v-bind:class="{ select_change : loop }" class="loop" v-on:click='loop_change' title="循环播放"><i class="fa fa-repeat"></i></div>
+				</div>
+			</div>
+			<div class="music_list">
+				<div class="list_son" v-for="(item,index) in song_list" v-on:click="change_song(index)" >
+					<i class="fa fa-circle-o-notch" ></i>
+					<div class="son_title">{{item.title}}</div>
+					<div class="son_singer">{{item.singer}}</div>
+					<div class="son_album">{{item.album}}</div>
+					<div class="son_time">{{item.time}}</div>
+				</div>
+			</div>
+			<audio controls="controls" v-bind:src="song_list[num].src" id="audio" preload hidden ></audio>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="index_js.js"></script>
+</html>
