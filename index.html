@@ -13,10 +13,16 @@
 	<div class="container" id="nowmusic">
 		<div class="container_pic" v-bind:style="{backgroundImage:'url('+song_list[num].pic+')'}"></div>
 		<div class="small_container">
+			<volume v-bind:width="volume.width+'%'" v-bind:volume_bool="functional_keys.volume_bool" v-bind:bool="functional_keys.functional_bool" v-on:volume-down="volume_down()"></volume>
+			<!--
 			<div class="volume" v-show="functional_keys.volume_bool">
 				<div class="now_volume" v-bind:style="{width:volume.width+'%'}"></div>
 				<div class="volume_block" onmousedown="volume_down()" v-bind:style="{left:volume.width+'%'}"></div>
 			</div>
+			-->
+			<functional-group v-bind:height="functional_keys.functional_height+'px'" v-bind:more_height="functional_keys.functional_height*1.2+'px'" v-bind:bool="functional_keys.functional_bool" v-on:functional-son="functional_son"  v-on:volume-bool="volume_bool">
+			</functional-group>
+			<!--
 			<div class="functional_group">
 				<div class="functional_keys" v-bind:style="{height:functional_keys.functional_height+'px'}" v-on:click="functional_son">
 					<div class="gan gan1" v-bind:class="{gan1_change:functional_keys.functional_bool}"></div>
@@ -37,6 +43,7 @@
 					<i class="fa fa-weixin"></i>
 				</div>
 			</div>
+			-->
 			<div class="music_information" >
 				<div class="logo" v-bind:style="{height:logo_height+'px',backgroundImage:'url('+song_list[num].pic+')'}">
 					<div class="logo_left">
@@ -70,13 +77,7 @@
 				</div>
 			</div>
 			<div class="music_list">
-				<div class="list_son" v-for="(item,index) in song_list" v-on:click="change_song(index)" >
-					<i class="fa fa-circle-o-notch" ></i>
-					<div class="son_title">{{item.title}}</div>
-					<div class="son_singer">{{item.singer}}</div>
-					<div class="son_album">{{item.album}}</div>
-					<div class="son_time">{{item.time}}</div>
-				</div>
+				<list-son  v-for="(item,index) in song_list" v-bind:songlist="song_list[index]" v-on:song-event="change_song(index)"></list-son>
 			</div>
 			<audio controls="controls" v-bind:src="song_list[num].src" id="audio" preload hidden ></audio>
 		</div>

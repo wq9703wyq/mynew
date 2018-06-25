@@ -1,3 +1,57 @@
+Vue.component('list-son',{
+    props:['songlist'],
+    template:"<div class='list_son' v-on:click='change_song'><i class='fa fa-circle-o-notch'></i><div class='son_title'>{{songlist.title}}</div><div class='son_singer'>{{songlist.singer}}</div><div class='son_album'>{{songlist.album}}</div><div class='son_time'>{{songlist.time}}</div></div>",
+    methods:{
+        change_song:function(){
+            this.$emit('song-event')
+        }
+    }
+})
+
+Vue.component('volume',{
+    props:['volume_bool','width','bool'],
+    template:"<div class='volume' v-show='volume_bool&&bool'>\
+                <div class='now_volume' v-bind:style='{width:width}'></div>\
+                <div class='volume_block' v-on:mousedown='volumedown' v-bind:style='{left:width}'></div>\
+            </div>",
+    methods:{
+        volumedown:function(){
+            this.$emit('volume-down')
+        }
+    }
+})
+
+Vue.component('functional-group',{
+    props:['height','bool','more_height'],
+    template:"<div class='functional_group'>\
+        <div class='functional_keys' v-bind:style='{height:height}' v-on:click='functionalson'>\
+            <div class='gan gan1' v-bind:class='{gan1_change:bool}'></div>\
+            <div class='gan gan2' v-bind:class='{gan2_change:bool}'></div>\
+            <div class='gan gan3' v-bind:class='{gan3_change:bool}'></div>\
+        </div>\
+        <div class='functional_volume' v-bind:class='{functional_volume_deafult:bool}' v-bind:style='{height:more_height}' v-on:click='volumebool' title='调一下音量还是可以的'>\
+            <i class='fa fa-volume-up'></i>\
+        </div>\
+        <div class='functional_heart' v-bind:class='{functional_heart_deafult:bool}' v-bind:style='{height:more_height}' title='收藏是不可能收藏的'>\
+            <i class='fa fa-heart'></i>\
+        </div>\
+        <div class='functional_down' v-bind:class='{functional_down_deafult:bool}' v-bind:style='{height:more_height}' title='下载是不可能下载的'>\
+            <i class='fa fa-arrow-down'></i>\
+        </div>\
+        <div class='functional_weixin' v-bind:class='{functional_weixin_deafult:bool}' v-bind:style='{height:more_height}' title='分享也是不可能的'>\
+            <i class='fa fa-weixin'></i>\
+        </div>\
+    </div>",
+     methods:{
+        functionalson:function(){
+            this.$emit('functional-son')
+        },
+        volumebool:function(){
+            this.$emit('volume-bool')
+        }
+    }
+})
+
 var vm=new Vue({
 	el:'#nowmusic',
 	data:{
